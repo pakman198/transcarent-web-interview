@@ -1,1 +1,18 @@
-{}
+{
+  "animals": [
+    {"animal": "ant", "hasChildren": null},
+    {
+      "animal": "bear", 
+      "hasChildren": [
+        {"animal": "cat", "hasChildren": null},
+        {
+          "animal": "dog", 
+          "hasChildren": [
+            {"animal": "elephant", "hasChildren": null}
+          ]
+        }
+      ]
+    },
+    {"animal": "frog", "hasChildren": null}
+  ]
+}

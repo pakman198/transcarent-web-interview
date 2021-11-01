@@ -1,9 +1,50 @@
+import React, { useState, useEffect } from 'react';
+
+import DATA from './data.json';
+
 import "./index.css";
 
+const Children = ({data}) => {
+  const children = data.map(item => {
+    const { animal, hasChildren } = item;
+
+    if(hasChildren) {
+      return (
+        <li className="with-child">
+          <span>{animal}</span>
+          <ol>
+            <Children data={hasChildren} />
+          </ol>
+        </li>
+      )
+    } else {
+      return <li key={animal}>{animal}</li>
+    }
+
+  });
+
+  return (
+    <>
+      {children}
+    </>
+  )
+}
+
 export default function Tree() {
+
   return (
     <div className="tree">
       <ol className="root">
+        <li className="with-child">
+          <span>root</span>
+          <ol>
+            <Children data={DATA.animals} />
+          </ol>
+        </li>
+      </ol>
+
+
+      {/* <ol className="root">
         <li className="with-child">
           <span>root</span>
           <ol>
@@ -23,16 +64,7 @@ export default function Tree() {
             <li>frog</li>
           </ol>
         </li>
-      </ol>
-      {/* <p>root</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;ant</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;bear</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cat</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dog</p>
-      <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elephant
-      </p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;frog</p> */}
+      </ol> */}
     </div>
   );
 }
