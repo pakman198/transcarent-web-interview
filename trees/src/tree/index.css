@@ -5,20 +5,32 @@
   font-family: monospace;
 }
 
-.root,
-.root > ul {
-  list-style: none;
-  margin-left: 0;
+.root {
   padding-left: 0;
 }
 
-.root li > ul {
+.root > li,
+.root ol > li,
+.root li > span {
+  margin-bottom: 16px;
+}
+
+.root li > span {
+  display: inline-block;
+}
+
+.root,
+.root ol {
+  counter-reset: section;
   list-style: none;
 }
 
-.root > li,
-.root ul > li,
-.root li > span {
-  margin-bottom: 16px;
-  display: list-item;
+li::before {
+  counter-increment: section;
+  content: counters(section, ".") " ";
+}
+
+.root .with-child::before {
+  counter-increment: section;
+  content: counters(section, ".") " ";
 }

@@ -3,27 +3,27 @@ import "./index.css";
 export default function Tree() {
   return (
     <div className="tree">
-      <ul className="root">
-        <li>root</li>
-        <li>
-          <ul>
+      <ol className="root">
+        <li className="with-child">
+          <span>root</span>
+          <ol>
             <li>ant</li>
-            <li>
+            <li className="with-child">
               <span>bear</span>
-              <ul>
+              <ol>
                 <li>cat</li>
-                <li>
+                <li className="with-child">
                   <span>dog</span>
-                  <ul>
+                  <ol>
                     <li>elephant</li>
-                  </ul>
+                  </ol>
                 </li>
-              </ul>
+              </ol>
             </li>
             <li>frog</li>
-          </ul>
+          </ol>
         </li>
-      </ul>
+      </ol>
       {/* <p>root</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;ant</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;bear</p>
