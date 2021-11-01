@@ -4,3 +4,21 @@
   padding: 10px;
   font-family: monospace;
 }
+
+.root,
+.root > ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.root li > ul {
+  list-style: none;
+}
+
+.root > li,
+.root ul > li,
+.root li > span {
+  margin-bottom: 16px;
+  display: list-item;
+}
