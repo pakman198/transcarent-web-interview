@@ -4,21 +4,60 @@ import DATA from './data.json';
 
 import "./index.css";
 
-const Children = ({data}) => {
-  const children = data.map(item => {
+const Children = ({data, parent = 1}) => {
+  const [ list, setList ] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { value } = e.target[0];
+    console.log({ e, value })
+    setList([
+      ...list, 
+      { animal: value, hasChildren: null}
+    ])
+    e.target.reset();
+  }
+
+  useEffect(() => {
+    setList(data)
+  }, []);
+
+
+  const children = list.map((item, index) => {
     const { animal, hasChildren } = item;
+    const isLastItem = list.length - 1 === index;
+
+    console.log({ list, index })
+
+    let periods = "";
+    for(let i = 0; i < parent; i++) {
+      periods += '.';
+    }
+
+    const animalString = `${animal[0]}${periods}${animal.slice(1)}`;
+    const inputField = isLastItem && (
+      <form onSubmit={handleSubmit}>
+        <input type="text"/>
+      </form>
+    )
 
     if(hasChildren) {
       return (
-        <li className="with-child">
-          <span>{animal}</span>
+        <li className="with-child" key={animal}>
+          <span>{animalString}</span>
+          {inputField}
           <ol>
-            <Children data={hasChildren} />
+            <Children data={hasChildren} parent={parent + 1} />
           </ol>
         </li>
       )
     } else {
-      return <li key={animal}>{animal}</li>
+      return (
+        <li key={animal}>
+          {animalString}
+          {inputField}
+        </li>
+      )
     }
 
   });
@@ -38,7 +77,7 @@ export default function Tree() {
         <li className="with-child">
           <span>root</span>
           <ol>
-            <Children data={DATA.animals} />
+            <Children data={DATA.animals.reverse()} />
           </ol>
         </li>
       </ol>
