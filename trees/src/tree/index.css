@@ -25,12 +25,18 @@
   list-style: none;
 }
 
-li::before {
+li > span::before {
   counter-increment: section;
   content: counters(section, ".") " ";
 }
 
-.root .with-child::before {
+.root .with-child > span::before {
   counter-increment: section;
   content: counters(section, ".") " ";
+}
+
+.with-child.reversed,
+.with-child.reversed > ol {
+  display: flex;
+  flex-direction: column-reverse;
 }

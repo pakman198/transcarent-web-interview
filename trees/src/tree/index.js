@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import DATA from './data.json';
 
 import "./index.css";
 
-const Children = ({data, parent = 1}) => {
-  const [ list, setList ] = useState([]);
+const Children = ({data, parent = 1, reversed}) => {
+  const [ list, setList ] = useState(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,11 +17,6 @@ const Children = ({data, parent = 1}) => {
     ])
     e.target.reset();
   }
-
-  useEffect(() => {
-    setList(data)
-  }, []);
-
 
   const children = list.map((item, index) => {
     const { animal, hasChildren } = item;
@@ -41,21 +36,26 @@ const Children = ({data, parent = 1}) => {
       </form>
     )
 
+    const childTitle = (
+      <>
+        <span>{animalString}</span>
+        {inputField}
+      </>
+    );
+
     if(hasChildren) {
       return (
-        <li className="with-child" key={animal}>
-          <span>{animalString}</span>
-          {inputField}
+        <li className={`with-child ${reversed ? 'reversed' : '' }`} key={animal}>
+          {childTitle}
           <ol>
-            <Children data={hasChildren} parent={parent + 1} />
+            <Children data={hasChildren} parent={parent + 1} reversed={reversed} />
           </ol>
         </li>
       )
     } else {
       return (
         <li key={animal}>
-          {animalString}
-          {inputField}
+          {childTitle}
         </li>
       )
     }
@@ -70,16 +70,17 @@ const Children = ({data, parent = 1}) => {
 }
 
 export default function Tree() {
+  const [isReversed, setIsReversed] = useState(false);
+
+  const toggleHandler = () => {
+    setIsReversed(isReversed => !isReversed);
+  }
 
   return (
     <div className="tree">
+      <button onClick={toggleHandler}>Toggle</button>
       <ol className="root">
-        <li className="with-child">
-          <span>root</span>
-          <ol>
-            <Children data={DATA.animals.reverse()} />
-          </ol>
-        </li>
+        <Children data={DATA.animals} reversed={isReversed} />
       </ol>
 
 
